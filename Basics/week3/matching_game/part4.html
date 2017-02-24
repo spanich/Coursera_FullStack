@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <title>Smiley Match!</title>
+    <style>
+        img {position:absolute}
+        div {
+            position: absolute;
+            width: 650px;
+            height: 525px;
+        }
+        #rightSide{
+            left: 650px;
+            border-left: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Matching Game</h1>
+    <p>Click the extra smiley face on the left!</p>
+    <div id="leftSide"></div>
+    <div id="rightSide"></div>
+
+    <script>
+        var numberOfFaces = 5;
+        var theLeftSide = document.getElementById("leftSide");
+        var theRightSide = document.getElementById("rightSide");
+        var theBody = document.getElementsByTagName("body")[0];
+
+
+        function generateFaces(){
+
+            while(theLeftSide.firstChild){
+                theLeftSide.removeChild(theLeftSide.firstChild);
+            }
+            while(theRightSide.firstChild){
+                theRightSide.removeChild(theRightSide.firstChild);
+            }
+            for(var i=0; i<numberOfFaces; i++){
+                var this_smiley = document.createElement("img");
+                this_smiley.src = "http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+                this_smiley.style.top = Math.floor(Math.random()*450)+"px";
+                this_smiley.style.left = Math.floor(Math.random()*550)+"px";
+                leftSide.appendChild(this_smiley);
+            }
+            leftSideImgs = theLeftSide.cloneNode(true);
+            leftSideImgs.removeChild(leftSideImgs.lastChild);
+            theRightSide.appendChild(leftSideImgs);
+
+            theLeftSide.lastChild.onclick = function nextLevel(event){
+                event.stopPropagation();
+                numberOfFaces += 5;
+                generateFaces();
+            };
+        }
+        generateFaces();
+        theBody.onclick = function gameOver(){
+            alert("Game Over!");
+            theBody.onclick = null;
+            theLeftSide.lastChild.onclick = null;
+        };
+
+    </script>
+</body>
+</html>
